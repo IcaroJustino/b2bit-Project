@@ -24,8 +24,10 @@ export default function LoginForm() {
             <input type="email" className={inputstyle} placeholder="e-mail" onChange={() => { }} required={true}></input>
             <label className="mb-[9px] font-bold text-[16px] my-[10px]">Password</label>
             <div className="relative">
-                <img className="absolute right-3 top-3" src={showPassword && showPassword == true ? show : hide} alt={"b2bitlogo"} aria-readonly={true}  />
-                <input type="password" className={inputstyle} onChange={() => { }} required={true}></input>
+                <img className="absolute right-3 top-3  " src={showPassword && showPassword == true ? show : hide} alt={"b2bitlogo"} aria-readonly={true}
+                    onClick={() => { setShowpassword(!showPassword) }}
+                />
+                <input type={showPassword && showPassword == true ? "text" : "password"} className={inputstyle} onChange={() => { }} required={true}></input>
             </div>
             <input type="submit" value="Sign in" className="mt-[36px] lg:w-[385.88px] md:w-[385.88px] w-[230px] h-[54.25px]  bg-submit text-brightwhite rounded-small">
             </input>

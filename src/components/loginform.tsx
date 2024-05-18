@@ -2,6 +2,9 @@ import { useState, useEffect } from "react"
 import hide from '../assets/hide.png'
 import show from '../assets/seek.png'
 import { Link, useNavigate } from "react-router-dom"
+import { Login } from "../api/services"
+import { LoginType } from "src/types/types"
+import { api } from "src/api/api"
 
 export default function LoginForm() {
 
@@ -16,17 +19,21 @@ export default function LoginForm() {
 
     const formSubmit = async (event: any) => {
         event.preventDefault();
-
-        const userdata = {
-            "email": event.target.email.value,
-            "password": event.target.password.value,
-            "keepLogin": event.target.keepLogin.checked
-        }
         try {
-            const url: string = `api url`;
-            navigate("/user");
+
+            const userdata: LoginType = {
+                "email": event.target.email.value,
+                "password": event.target.password.value,
+            }
+            console.log("userData", userdata)
+
+            const apiAuth: any = await Login(userdata)
+
+            if (apiAuth.msg) {
+                navigate("/user");
+            }
         } catch (err: any) {
-            console.log(err.message)
+            return err
         }
     }
 

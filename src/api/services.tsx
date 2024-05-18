@@ -23,7 +23,7 @@ export const Login = async ({ email, password }: LoginType) => {
         }
     } catch (error) {
         return {
-            error: error
+            error: "error"
         }
     }
 }

@@ -1,7 +1,6 @@
 import { UserType } from "src/types/types"
 
 export default function UserCard(userData: UserType) {
-    console.log(userData)
     return (
         <section className="lg:w-[356px] md:w-[356px] w-[80%] min-h-[315px]  bg-card rounded-2xl m-auto flex shadow-light">
             <div className="flex justify-start  mx-auto  my-8 ">

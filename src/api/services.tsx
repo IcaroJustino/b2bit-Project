@@ -29,12 +29,9 @@ export const Login = async ({ email, password }: LoginType) => {
 
 
 
-export const GetUserdata = async (token: any) => {
+export const GetUserdata = async () => {
     try {
-        const config = {
-            headers: { Authorization: `Bearer ${token}` }
-        };
-        const response = await api.get("/auth/profile/", config)
+        const response = await api.get("/auth/profile/")
         const data: any = response
         return {
             msg: "sucess",

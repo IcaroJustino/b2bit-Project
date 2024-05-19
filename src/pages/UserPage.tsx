@@ -9,8 +9,7 @@ export default function UserPage() {
 
     const FetchData = async () => {
         try {
-            const token = sessionStorage.getItem("acess_token")
-            const userData = await GetUserdata(token)
+            const userData = await GetUserdata()
             if (userData.msg == "sucess") {
                 setUser(userData.response)
             } else {

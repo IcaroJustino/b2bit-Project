@@ -27,12 +27,6 @@ export default function App() {
     );
   };
 
-  const getUnprotectedRoute = (key: number, path: string, Component: ReactNode) => {
-    return (
-      <Route key={key} path={path} element={Component} />
-    );
-  }
-
   const getAuthenticadedroutes = (key: number, path: string, Component: ReactNode) => {
     return (
       <Route key={key} path={path} element={<ProtectedLogin>{Component}</ProtectedLogin>} />

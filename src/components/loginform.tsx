@@ -1,15 +1,13 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import hide from '../assets/hide.png'
 import show from '../assets/seek.png'
 import { Link, useNavigate } from "react-router-dom"
 import { Login } from "../api/services"
 import { LoginType } from "src/types/types"
-import { api } from "src/api/api"
-
 export default function LoginForm() {
 
     const [error, setError] = useState(false)
-    const [errormsg, setErrorMsg] = useState('Error')
+    const [errormsg, setErrorMsg] = useState('')
     const [showPassword, setShowpassword] = useState(false)
     const [loading, setLoading] = useState(false)
     const navigate = useNavigate();
@@ -18,22 +16,27 @@ export default function LoginForm() {
 
 
     const formSubmit = async (event: any) => {
-        event.preventDefault();
         try {
-
+            event.preventDefault();
             const userdata: LoginType = {
                 "email": event.target.email.value,
                 "password": event.target.password.value,
             }
-            console.log("userData", userdata)
-
             const apiAuth: any = await Login(userdata)
-
-            if (apiAuth.msg) {
-                navigate("/user");
+            console.log("request", apiAuth)
+            if (apiAuth.msg == "sucess" && apiAuth.status == 200) {
+                setError(false)
+                setErrorMsg('')
+                navigate("/user", { replace: true })
             }
-        } catch (err: any) {
-            return err
+            if (apiAuth.status == 401) {
+                setError(true)
+                setErrorMsg("Wrong E-mail or Password")
+            }
+        } catch (error: any) {
+            setError(true)
+            setErrorMsg("Something whent whrong ")
+            throw new Error("Bad Request");
         }
     }
 
@@ -41,7 +44,7 @@ export default function LoginForm() {
         <form className="lg:h-min-[288px] flex flex-col justify-evenly w-fit h-fit mx-auto" onSubmit={formSubmit}>
             {
                 error && errormsg ?
-                    <span className=" shadow-simple bg-red-500 bg-opacity-80 p-3 mb-[20px] lg:w-[385.88px] md:w-[385.88px] w-[230px] rounded-small">
+                    <span className=" shadow-simple bg-red-500 bg-opacity-80 p-3 mb-[20px] lg:w-[385.88px] md:w-[385.88px] w-[230px] lg:text-base md:text-base text-sm rounded-small text-center">
                         {errormsg}
                     </span> :
                     null
@@ -64,9 +67,9 @@ export default function LoginForm() {
             <Link className="mt-6 font-semibold " to={"/user"}>Forgot Password?</Link>
             {
                 loading && loading == true ?
-                    <input type="submit" value="Signin" className="mt-[24px]  lg:w-[385.88px] md:w-[385.88px] w-[230px] h-[54.25px]  bg-submit text-brightwhite rounded-small"></input>
+                    <input type="submit" value="Signin" className="mt-[24px]  lg:w-[385.88px] md:w-[385.88px] w-[230px] h-[54.25px]  bg-submit text-brightwhite rounded-small removeItem"></input>
                     :
-                    <input type="submit" value="Sign in" className="mt-[24px]  lg:w-[385.88px] md:w-[385.88px] w-[230px] h-[54.25px]  bg-submit text-brightwhite rounded-small"></input>
+                    <input type="submit" value="Sign in" className="mt-[24px]  lg:w-[385.88px] md:w-[385.88px] w-[230px] h-[54.25px]  bg-submit text-brightwhite rounded-small hover:cursor-pointer"></input>
             }
         </form>
     )

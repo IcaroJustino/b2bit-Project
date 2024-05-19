@@ -5,7 +5,7 @@ export default function UserHeader() {
     const Logout = () => {
         sessionStorage.removeItem('refresh_token');
         sessionStorage.removeItem('acess_token');
-        navigate("/");
+        navigate("/", { replace: true });
     }
 
     return (

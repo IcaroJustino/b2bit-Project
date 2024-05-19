@@ -1,9 +1,13 @@
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import Logo from '../assets/logo.png'
 import LoginForm from "../components/loginform"
+import { useNavigate } from "react-router-dom";
 
 
 export default function LoginPage() {
+    const navigate = useNavigate();
+
+
     return (
         <>
             <main className="bg-login  h-screen w-screen flex">

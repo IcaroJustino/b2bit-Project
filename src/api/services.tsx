@@ -10,23 +10,51 @@ export const Login = async ({ email, password }: LoginType) => {
         const data: any = response
 
         if (data) {
-            console.log("AAAAAAAAAAAAA", data.data.tokens)
             sessionStorage.setItem("refresh_token", data.data.tokens.refresh);
             sessionStorage.setItem("acess_token", data.data.tokens.access);
             return {
                 msg: "sucess",
-                response: data
+                response: data,
+                status: data.status
             };
         }
-    } catch (error) {
+    } catch (error: any) {
         return {
-            error
-        }
+            msg: error,
+            response: error.message,
+            status: error.response.status
+        };
     }
 }
 
 
 
-export const GetUserdata = async () => {
+export const GetUserdata = async (token: any) => {
+    try {
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+        const response = await api.get("/auth/profile/", config)
+        const data: any = response
+        return {
+            msg: "sucess",
+            response: data.data,
+            status: data
+        }
+    } catch (error) {
+        return {
+            msg: error,
+            response: error,
+            status: error
+        };
+    }
+}
 
+
+export const getToken = () => sessionStorage.getItem("acess_token");
+
+
+export const deletTokens = () => {
+    sessionStorage.removeItem("acess_token");
+    sessionStorage.removeItem("refresh_token");
 }

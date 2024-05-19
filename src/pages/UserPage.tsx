@@ -1,8 +1,13 @@
 import UserHeader from "../components/header"
 import UserCard from "../components/userCard"
+import { useEffect, useState } from "react"
+import { GetUserdata } from "../api/services"
+import { UserType } from "../types/types"
 export default function UserPage() {
 
-    const user = {
+    const [User, setUser]: any = useState()
+
+    const usermockup = {
         "id": "445e138e-99c6-4055-91d1-ebc2fb6165ee",
         "avatar": {
             "id": 8,
@@ -24,14 +29,41 @@ export default function UserPage() {
         }
     }
 
+    const FetchData = async () => {
+        try {
+            const token = sessionStorage.getItem("acess_token")
+            const userData = await GetUserdata(token)
+            if (userData.msg == "sucess") {
+                setUser(userData.response)
+            } else {
+                alert("Somenthing Whent Wrong")
+            }
+
+        } catch (error) {
+
+        }
+    }
+
+
+    useEffect(() => {
+        FetchData()
+    }, [])
+
+
+
     return (
         <>
             <main className="h-screen w-screen bg-user_page flex flex-col">
                 <UserHeader />
                 <div className="flex w-full h-full ">
-                    <UserCard data={user} />
+                    {
+                        User ?
+                            <UserCard data={User} /> :
+                            <></>
+                    }
                 </div>
             </main>
         </>
     )
+
 };

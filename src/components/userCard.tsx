@@ -1,32 +1,7 @@
-interface UserData {
-    data: {
-        id: string;
-        avatar: {
-            id: number,
-            image_high_url: string,
-            image_medium_url: string
-            image_low_url: string
-        },
-        name: string,
-        last_name: string,
-        email: string,
-        role: {
-            value: number,
-            label: string
-        },
-        last_login: string,
-        staff_role: {
-            value: number
-            label: string
-        }
-    }
+import { UserType } from "src/types/types"
 
-}
-
-export default function UserCard(userData: UserData) {
-
-
-
+export default function UserCard(userData: UserType) {
+    console.log(userData)
     return (
         <section className="lg:w-[356px] md:w-[356px] w-[80%] min-h-[315px]  bg-card rounded-2xl m-auto flex shadow-light">
             <div className="flex justify-start  mx-auto  my-8 ">
@@ -34,7 +9,7 @@ export default function UserCard(userData: UserData) {
                     userData && userData ?
                         <div className="  lg:min-w-[75px] mx-auto  lg:h-fit lg:w-fit md:w-[fit] w-full flex flex-col justify-start ">
                             <span className="font-semibold text-center text-xsm mb-2.5">Bem vindo de volta {userData.data.name}</span>
-                            <img className="object-contain  mx-auto mb-[30px] rounded-lg" src={userData.data.avatar.image_high_url} width={75} height={75} alt={"b2bitlogo"} aria-readonly={true} />
+                            <img className="object-fit w-[75px] h-[75px]   mx-auto mb-[30px] rounded-lg" src={userData.data.avatar.high} alt={"b2bitlogo"} aria-readonly={true} />
                             <div className="flex flex-col justify-start w-fit h-full ">
                                 <label className="flex flex-col">
                                     <span className="flex mb-2"><span className="font-normal">Your</span> <p className="ml-2 font-bold">Name :</p></span>
